@@ -5,8 +5,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,10 +37,9 @@ public class FetchPlacesTask extends AsyncTask<String[], Void, List<Place>> {
 
     private PlacesAdapter placesAdapter;
 
-    private static final String API_KEY_VALUE =  "AIzaSyCb2IYxV01WkTIe_4hZ_qJAuT4F-YwVzJE";
+    private static final String API_KEY_VALUE = BuildConfig.GOOGLE_API_KEY;
 
-    public FetchPlacesTask(Activity activity, PlacesAdapter adapter) {
-        mActivityRef = new WeakReference<>(activity);
+    public FetchPlacesTask(PlacesAdapter adapter) {
         placesAdapter = adapter;
     }
 
@@ -175,15 +172,9 @@ public class FetchPlacesTask extends AsyncTask<String[], Void, List<Place>> {
 
     @Override
     protected void onPostExecute(List<Place> places) {
-        Activity activity = mActivityRef.get();
 
         if(places != null && places.size() > 0){
-
-            ArrayList<Place> placesArrayList = new ArrayList<Place>(places);
-            placesAdapter = new PlacesAdapter(activity, placesArrayList);
-
-            ListView listView = (ListView) activity.findViewById(R.id.places_listview);
-            listView.setAdapter(placesAdapter);
+            placesAdapter.addAll(places);
         }
     }
 

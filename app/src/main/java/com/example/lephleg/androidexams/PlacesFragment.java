@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlacesFragment extends Fragment {
 
@@ -44,7 +43,7 @@ public class PlacesFragment extends Fragment {
                 EditText searchField = (EditText)rootView.findViewById(R.id.place_search_text);
                 String searchQuery = searchField.getText().toString();
                 String[] queryWords = searchQuery.split(" ");
-                FetchPlacesTask task = new FetchPlacesTask(getActivity(), placesAdapter);
+                FetchPlacesTask task = new FetchPlacesTask(placesAdapter);
                 task.execute(queryWords);
                 hideKeyboard(rootView);
             }
